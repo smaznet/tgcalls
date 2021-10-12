@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+// @ts-ignore
 import { RTCPeerConnection } from 'wrtc';
 import { SdpBuilder } from './sdp-builder';
 import { parseSdp } from './utils';
@@ -31,6 +32,7 @@ export class TGCalls<T> extends EventEmitter {
         }
 
         this.#connection = new RTCPeerConnection();
+        console.log(this.#connection.getConfiguration());
         this.#connection.oniceconnectionstatechange = async () => {
             this.emit(
                 'iceConnectionState',

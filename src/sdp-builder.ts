@@ -4,16 +4,17 @@ export class SdpBuilder {
     #lines: string[] = [];
     #newLine: string[] = [];
 
+    constructor(private lineSep = '\n') {}
     get lines() {
         return this.#lines.slice();
     }
 
     join() {
-        return this.#lines.join('\n');
+        return this.#lines.join(this.lineSep);
     }
 
     finalize() {
-        return this.join() + '\n';
+        return this.join() + this.lineSep;
     }
 
     private add(line: string) {
@@ -118,8 +119,8 @@ export class SdpBuilder {
         this.addSsrcEntry(conference.transport);
     }
 
-    static fromConference(conference: Conference) {
-        const sdp = new SdpBuilder();
+    static fromConference(conference: Conference, lineSep = '\n') {
+        const sdp = new SdpBuilder(lineSep);
         sdp.addConference(conference);
         return sdp.finalize();
     }
